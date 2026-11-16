@@ -1,0 +1,24 @@
+# Render Blueprint: backend only (free web service). Frontend goes to Netlify, DB to Neon.
+services:
+  - type: web
+    name: supportdesk-api
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    # Free plan has no release phase, so migrations run before the server starts.
+    startCommand: flask --app wsgi db upgrade && gunicorn wsgi:app --bind 0.0.0.0:$PORT --workers 2
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: APP_ENV
+        value: production
+      - key: SECRET_KEY
+        generateValue: true
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL   # paste the Neon connection string in the Render dashboard
+        sync: false
+      - key: CORS_ORIGINS   # e.g. https://your-site.netlify.app
+        sync: false
