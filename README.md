@@ -18,8 +18,8 @@ SupportDesk es un mini sistema de tickets de soporte técnico pensado como proye
 **Todos los datos son ficticios.** No hay datos, nombres ni casos de empresas o clientes reales.
 
 ### Demo
-- 🔗 Demo: **`supportdeskd.netlify.app`** ← _reemplaza al desplegar_
-- API: `https://TU-API.onrender.com/api/health`
+- 🔗 Demo: **https://supportdeskd.netlify.app**
+- API: https://supportdesk-api-xdsc.onrender.com/api/health
 
 ### Usuarios de prueba
 | Rol | Correo | Contraseña |
@@ -72,7 +72,7 @@ Requisitos: Python 3.11+, Node 20+.
 **Backend** (http://localhost:5000)
 ```bash
 cd backend
-python -m venv .venv && source .venv/bin/activate     # Windows: .venv\Scripts\activate
+python -m venv .venv && source .venv/bin/activate     # Windows: .venv\Scripts\Activate.ps1
 pip install -r requirements-dev.txt
 cp .env.example .env                                   # opcional; sin DATABASE_URL usa SQLite
 flask --app wsgi db upgrade                            # crea las tablas
@@ -104,7 +104,7 @@ Hay **80 pruebas** (39 pytest + 41 Vitest/RTL). GitHub Actions las ejecuta en ca
 ### Despliegue (todo con planes gratuitos)
 1. **Neon**: crea un proyecto y copia la cadena de conexión (`postgresql://…`).
 2. **Render**: nuevo *Blueprint* desde este repo (`render.yaml`). Define `DATABASE_URL` (Neon) y `CORS_ORIGINS` (URL de Netlify). `SECRET_KEY` y `JWT_SECRET_KEY` se generan solos. Las migraciones corren al arrancar. En `APP_ENV=production` la app **se niega a iniciar con SQLite** o sin secretos.
-3. **Netlify**: base directory `frontend`, variable `VITE_API_URL=https://TU-API.onrender.com`.
+3. **Netlify**: base directory `frontend`, variable `VITE_API_URL=https://supportdesk-api-xdsc.onrender.com`.
 4. Cargar datos demo una vez (desde tu máquina con la `DATABASE_URL` de Neon exportada): `python scripts/seed.py`.
 
 Variables de entorno: `APP_ENV`, `SECRET_KEY`, `JWT_SECRET_KEY`, `DATABASE_URL`, `CORS_ORIGINS` (backend) y `VITE_API_URL` (frontend). **Ningún secreto vive en el repo.**
@@ -131,7 +131,7 @@ Estados: `ok`, `at_risk` (≥ 75 % del tiempo consumido), `breached` (vencido o 
 - **Lo que no hice (a propósito):** refresh tokens, notificaciones por correo, adjuntos, SLA con horario laboral/pausas. Son los siguientes pasos naturales.
 
 ### Qué aprendí
-> _Edita esta sección con tus propias palabras antes de publicar._ Puntos de partida: modelar el SLA como funciones puras facilita probarlo; mantener el contrato de la API estable permitió desarrollar frontend y backend en paralelo; los planes gratuitos obligan a pensar en arranques en frío y migraciones al iniciar; la autorización debe vivir en el servidor, no en la interfaz.
+> _Reescribe esta sección con tus propias palabras._ Puntos de partida: modelar el SLA como funciones puras facilita probarlo; mantener el contrato de la API estable permite desarrollar frontend y backend en paralelo; los planes gratuitos obligan a pensar en arranques en frío y migraciones al iniciar; la autorización debe vivir en el servidor, no en la interfaz; y desplegar con tres servicios (Neon, Render y Netlify) me enseñó a manejar variables de entorno y CORS entre ellos.
 
 ---
 
@@ -145,8 +145,8 @@ SupportDesk is a mini technical-support ticketing system built as a portfolio pr
 **All data is fictional.** No real companies, customers, people or cases.
 
 ### Demo
-- 🔗 Live demo: **`supportdeskd.netlify.app`** 
-- API: `https://YOUR-API.onrender.com/api/health`
+- 🔗 Live demo: **https://supportdeskd.netlify.app**
+- API: https://supportdesk-api-xdsc.onrender.com/api/health
 
 ### Demo accounts
 | Role | Email | Password |
@@ -168,7 +168,7 @@ Requirements: Python 3.11+, Node 20+.
 ```bash
 # Backend → http://localhost:5000
 cd backend
-python -m venv .venv && source .venv/bin/activate
+python -m venv .venv && source .venv/bin/activate     # Windows: .venv\Scripts\Activate.ps1
 pip install -r requirements-dev.txt
 flask --app wsgi db upgrade
 python scripts/seed.py            # 3 users + 60 fictional tickets (--reset to recreate)
@@ -191,7 +191,7 @@ Neon (PostgreSQL) → Render (`render.yaml` blueprint; set `DATABASE_URL` and `C
 RTK Query for caching and tag-based invalidation · Zod + React Hook Form for typed validation · filters kept in the URL (shareable; export uses the same filters) · SLA computed on read with pure, unit-tested functions (calendar hours; "waiting for user" does not pause the clock) · server-side authorization (users never see others' tickets or internal notes) · automatic audit log · 12-factor configuration · authenticated file downloads through `fetch` + `blob`. **Deliberately out of scope:** refresh tokens, email notifications, attachments, business-hours SLAs.
 
 ### What I learned
-> _Rewrite this in your own words before publishing._ Starting points: pure functions make SLA logic easy to test; a stable API contract allows parallel frontend/backend work; free tiers force you to think about cold starts and migrations on boot; authorization belongs on the server, not in the UI.
+> _Rewrite this in your own words._ Starting points: pure functions make SLA logic easy to test; a stable API contract allows parallel frontend/backend work; free tiers force you to think about cold starts and migrations on boot; authorization belongs on the server, not in the UI; deploying across three services (Neon, Render, Netlify) taught me how environment variables and CORS tie them together.
 
 ---
 
