@@ -18,7 +18,7 @@ SupportDesk es un mini sistema de tickets de soporte técnico pensado como proye
 **Todos los datos son ficticios.** No hay datos, nombres ni casos de empresas o clientes reales.
 
 ### Demo
-- 🔗 Demo: **`https://TU-SITIO.netlify.app`** ← _reemplaza al desplegar_
+- 🔗 Demo: **`supportdeskd.netlify.app`** ← _reemplaza al desplegar_
 - API: `https://TU-API.onrender.com/api/health`
 
 ### Usuarios de prueba
@@ -145,7 +145,7 @@ SupportDesk is a mini technical-support ticketing system built as a portfolio pr
 **All data is fictional.** No real companies, customers, people or cases.
 
 ### Demo
-- 🔗 Live demo: **`https://YOUR-SITE.netlify.app`** ← _replace after deploying_
+- 🔗 Live demo: **`supportdeskd.netlify.app`** 
 - API: `https://YOUR-API.onrender.com/api/health`
 
 ### Demo accounts
